@@ -1,61 +1,57 @@
-document.addEventListener("DOMContentLoaded", function () {
-  let button = document.createElement("button");
-  button.id = "button";
-  let btnText = document.createTextNode("Add Square");
-  button.appendChild(btnText);
-  document.body.appendChild(button);
+window.onload = () => {
+  let body = document.body;
   let container = document.createElement("div");
-  document.body.appendChild(container);
-  container.id = "container";
-  let counter = 0;
+  container.className = "container";
 
-  button.addEventListener("click", fun);
+  let numberOfBoxes = 0;
 
-  function fun() {
+  let addSquareButton = document.createElement("button");
+
+  addSquareButton.innerText = "Add Sqaure";
+
+  addSquareButton.addEventListener("click", () => {
+    numberOfBoxes++;
+
     let div = document.createElement("div");
-    div.className = "div";
+    console.log(div.id);
 
-    console.log("ive been clicked");
-    div.style.height = "150px";
-    div.style.width = "150px";
+    div.className = "box";
+
+    div.id = numberOfBoxes;
+
     container.appendChild(div);
 
-    div.id = [counter];
-    console.log(counter);
-    counter++;
-  }
+    div.addEventListener("mouseover", () => {
+      div.innerText = div.id;
+    });
+    div.addEventListener("mouseout", () => {
+      div.innerText = "";
+    });
 
-  let h1 = document.createElement("h1");
-  h1.id = "h1";
-  let h1text = document.createTextNode("ID " + [counter]);
-  h1.appendChild(h1text);
-  div.appendChild(h1);
+    let colorArray = ["Black", "Green", "Red", "Yellow", "Orange", "Purple"];
 
-  div.addEventListener("click", funn);
+    div.addEventListener("click", () => {
+      div.style.backgroundColor =
+        colorArray[Math.floor(Math.random() * colorArray.length)];
+    });
 
-  function funn() {
-    let color = [
-      "red",
-      "orange",
-      "yellow",
-      "green",
-      "blue",
-      "purple",
-      "black",
-      "brown",
-    ];
-    div.style.backgroundColor = color[Math.floor(Math.random() * color.length)];
-  }
-
-  div.addEventListener("dblclick", function () {
-    if (div.id % 2 == 0 && div.nextElementSibling === null) {
-      alert("There isnt a square to remove after the clicked square");
-    } else if (div.id % 2 == 0) {
-      square.nextElementSibling.remove();
-    } else if (div.previousElementSibling === null) {
-      alert("There isnt a square to remove before the clicked square");
-    } else {
-      div.previousElementSibling.remove();
-    }
+    div.addEventListener("dblclick", () => {
+      if (div.id % 2 == 0) {
+        if (div.nextSibling) {
+          div.nextSibling.remove();
+        } else {
+          alert("There is nothing after this square");
+        }
+      } else {
+        if (div.previousSibling) {
+          div.previousSibling.remove();
+        } else {
+          alert("There is nothing before this square");
+        }
+      }
+    });
   });
-});
+
+  body.appendChild(addSquareButton);
+  body.appendChild(container);
+};
